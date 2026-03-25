@@ -1,6 +1,7 @@
 import './App.css'
 import ContadorRegressivo from './components/ContadorRegressivo'
 import EditorTempos from './components/EditorTempos'
+import ListaTarefas from './components/ListaTarefas'
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
       <main>
         <div id="main-container">
           <ContadorRegressivo />
-          <EditorTempos />
+          <ListaTarefas />
         </div>
       </main>
     </div>
