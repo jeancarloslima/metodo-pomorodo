@@ -5,15 +5,16 @@ import EditorTempos from './components/EditorTempos'
 function App() {
 
   return (
-    <div className='app'>
+    <div id='app'>
       <header>
-        <div className="header-container">
+        <div id="header-container">
+          <h1 id='titulo'>Pomodoro</h1>
           <EditorTempos />
         </div>
       </header>
 
       <main>
-        <div className="main-container">
+        <div id="main-container">
           <ContadorRegressivo />
           <EditorTempos />
         </div>
