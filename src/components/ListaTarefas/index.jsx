@@ -6,30 +6,42 @@ export default function ListaTarefas() {
   const [listaTarefas, setListaTarefas] = useState(
     JSON.parse(localStorage.getItem("lista-tarefas")) || [],
   );
-  const [id, setId] = useState(
-    listaTarefas.length > 0 ? listaTarefas.length - 1 : 0,
-  );
+  const [id, setId] = useState(listaTarefas.length);
   const inputRef = useRef(null);
 
   function handleCriaTarefa() {
     const valor = inputRef.current.value;
 
     if (valor.trim() !== "") {
-        const listaAtualizada = [...listaTarefas, {id: id, texto: valor}]
+      const listaAtualizada = [...listaTarefas, { id: id, texto: valor }];
 
-        setListaTarefas(listaAtualizada);
-        setId((valorAtual) => valorAtual + 1);
+      setListaTarefas(listaAtualizada);
+      setId((valorAtual) => valorAtual + 1);
 
-        localStorage.setItem("lista-tarefas", JSON.stringify(listaAtualizada));
+      localStorage.setItem("lista-tarefas", JSON.stringify(listaAtualizada));
     }
+  }
+
+  function handleDeletaTarefa(e) {
+    const noPai = e.target.parentNode;
+    console.log(noPai);
+    
+    const id = Number(noPai.id);
+    const listaAtualizada = listaTarefas.filter(item => item.id !== id);
+
+    setListaTarefas(listaAtualizada);
+    localStorage.setItem("lista-tarefas", JSON.stringify(listaAtualizada));
   }
 
   return (
     <div className="lista-tarefas-container">
       <h2>Tarefas</h2>
       {listaTarefas.map((item) => (
-        <li className="item-tarefa" key={item.id}>
-          {item.texto}
+        <li className="item-tarefa" key={item.id} id={item.id}>
+          <span>{item.texto}</span>
+          <button onClick={handleDeletaTarefa} className="btn-excluir-tarefa">
+            Excluir
+          </button>
         </li>
       ))}
       {!criandoTarefa && (
@@ -49,7 +61,9 @@ export default function ListaTarefas() {
           >
             Cancelar
           </button>
-          <button onClick={handleCriaTarefa} className="btn-cancela-tarefa">Salvar</button>
+          <button onClick={handleCriaTarefa} className="btn-cancela-tarefa">
+            Salvar
+          </button>
         </div>
       )}
     </div>
