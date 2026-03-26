@@ -1,0 +1,20 @@
+.contador-container {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cor-fundo-claro);
+}
+
+.modos-container {
+    width: 100%;
+    display: flex;
+    gap: 4%;
+}
+
+.btn-modo {
+    width: 48%;
+    height: 40px;
+}

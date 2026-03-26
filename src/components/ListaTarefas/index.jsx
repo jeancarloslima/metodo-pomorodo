@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
 import "./lsita-tarefas.css";
+import { useRef, useState } from "react";
+import { FaTrash } from "react-icons/fa";
 
 export default function ListaTarefas() {
   const [criandoTarefa, setCriandoTarefa] = useState(false);
@@ -25,9 +26,9 @@ export default function ListaTarefas() {
   function handleDeletaTarefa(e) {
     const noPai = e.target.parentNode;
     console.log(noPai);
-    
+
     const id = Number(noPai.id);
-    const listaAtualizada = listaTarefas.filter(item => item.id !== id);
+    const listaAtualizada = listaTarefas.filter((item) => item.id !== id);
 
     setListaTarefas(listaAtualizada);
     localStorage.setItem("lista-tarefas", JSON.stringify(listaAtualizada));
@@ -36,14 +37,16 @@ export default function ListaTarefas() {
   return (
     <div className="lista-tarefas-container">
       <h2>Tarefas</h2>
-      {listaTarefas.map((item) => (
-        <li className="item-tarefa" key={item.id} id={item.id}>
-          <span>{item.texto}</span>
-          <button onClick={handleDeletaTarefa} className="btn-excluir-tarefa">
-            Excluir
-          </button>
-        </li>
-      ))}
+      <ul className="lista-tarefas">
+        {listaTarefas.map((item) => (
+          <li className="item-tarefa" key={item.id} id={item.id}>
+            <span>{item.texto}</span>
+            <button onClick={handleDeletaTarefa} className="btn-excluir-tarefa">
+              <FaTrash />
+            </button>
+          </li>
+        ))}
+      </ul>
       {!criandoTarefa && (
         <button
           onClick={() => setCriandoTarefa(true)}
