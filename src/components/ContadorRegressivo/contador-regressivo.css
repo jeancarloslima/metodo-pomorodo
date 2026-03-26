@@ -5,7 +5,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
     background-color: var(--cor-fundo-claro);
+    border-radius: 8px;
 }
 
 .modos-container {
@@ -17,4 +20,24 @@
 .btn-modo {
     width: 48%;
     height: 40px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.modo-ativo {
+    background-color: var(--cor-fundo);
+}
+
+.tempo {
+    font-size: 5rem;
+    font-weight: 600;
+}
+
+.btn-controle-tempo {
+    width: 150px;
+    height: 40px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
 }

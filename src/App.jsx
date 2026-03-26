@@ -10,7 +10,7 @@ function App() {
     <div id='app'>
       <header>
         <div id="header-container">
-          <h1 id='titulo'>Pomdor<GiTomato /></h1>
+          <h1 id='titulo'>Pomodor<GiTomato /></h1>
           <EditorTempos />
         </div>
       </header>
