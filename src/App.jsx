@@ -1,3 +1,4 @@
+import { GiTomato } from 'react-icons/gi'
 import './App.css'
 import ContadorRegressivo from './components/ContadorRegressivo'
 import EditorTempos from './components/EditorTempos'
@@ -9,7 +10,7 @@ function App() {
     <div id='app'>
       <header>
         <div id="header-container">
-          <h1 id='titulo'>Pomodoro</h1>
+          <h1 id='titulo'>Pomdor<GiTomato /></h1>
           <EditorTempos />
         </div>
       </header>
