@@ -36,7 +36,7 @@ export default function ListaTarefas() {
 
   return (
     <div className="lista-tarefas-container">
-      <h2>Tarefas</h2>
+      <h2 className="titulo-tarefas">Tarefas</h2>
       <ul className="lista-tarefas">
         {listaTarefas.map((item) => (
           <li className="item-tarefa" key={item.id} id={item.id}>
@@ -52,7 +52,7 @@ export default function ListaTarefas() {
           onClick={() => setCriandoTarefa(true)}
           className="btn-add-tarefa"
         >
-          Adicionar Tarefa
+          + Adicionar Tarefa
         </button>
       )}
       {criandoTarefa && (
