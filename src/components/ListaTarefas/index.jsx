@@ -24,8 +24,9 @@ export default function ListaTarefas() {
   }
 
   function handleDeletaTarefa(e) {
-    const noPai = e.target.parentNode;
+    const noPai = e.target.parentElement;
     console.log(noPai);
+    
 
     const id = Number(noPai.id);
     const listaAtualizada = listaTarefas.filter((item) => item.id !== id);
