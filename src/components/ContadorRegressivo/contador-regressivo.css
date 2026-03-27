@@ -22,6 +22,7 @@
     height: 40px;
     border: 1px solid transparent;
     border-radius: 8px;
+    font-family: var(--fonte-primaria);
     cursor: pointer;
 }
 
@@ -39,5 +40,6 @@
     height: 40px;
     border: 1px solid transparent;
     border-radius: 4px;
+    font-family: var(--fonte-primaria);
     cursor: pointer;
 }
