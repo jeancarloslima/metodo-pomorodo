@@ -27,8 +27,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    padding: 1.5rem;
+    gap: 5dvh;
+    padding: 10dvh 1.5rem 1.5rem 1.5rem;
     background-color: var(--cor-fundo);
 }
 
