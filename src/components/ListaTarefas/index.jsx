@@ -20,13 +20,14 @@ export default function ListaTarefas() {
       setId((valorAtual) => valorAtual + 1);
 
       localStorage.setItem("lista-tarefas", JSON.stringify(listaAtualizada));
+
+      inputRef.current.value = "";
+      inputRef.current.focus();
     }
   }
 
   function handleDeletaTarefa(e) {
     const noPai = e.target.parentElement;
-    console.log(noPai);
-    
 
     const id = Number(noPai.id);
     const listaAtualizada = listaTarefas.filter((item) => item.id !== id);
@@ -41,7 +42,7 @@ export default function ListaTarefas() {
       <ul className="lista-tarefas">
         {listaTarefas.map((item) => (
           <li className="item-tarefa" key={item.id} id={item.id}>
-            <span>{item.texto}</span>
+            <span className="texto-tarefa">{item.texto}</span>
             <button onClick={handleDeletaTarefa} className="btn-excluir-tarefa">
               <FaTrash />
             </button>
@@ -58,16 +59,28 @@ export default function ListaTarefas() {
       )}
       {criandoTarefa && (
         <div className="cria-tarefa-container">
-          <input ref={inputRef} type="text" name="tarefa" id="tarefa" />
-          <button
-            onClick={() => setCriandoTarefa(false)}
-            className="btn-cancela-tarefa"
-          >
-            Cancelar
-          </button>
-          <button onClick={handleCriaTarefa} className="btn-cancela-tarefa">
-            Salvar
-          </button>
+          <input
+            ref={inputRef}
+            type="text"
+            name="tarefa"
+            id="tarefa"
+            maxLength={window.innerWidth < 550 ? "30" : "50"}
+            autoFocus
+          />
+          <div className="botoes-criar-tarefa">
+            <button
+              onClick={() => setCriandoTarefa(false)}
+              className="btn-tarefa btn-cancela-tarefa"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleCriaTarefa}
+              className="btn-tarefa btn-salva-tarefa"
+            >
+              Salvar
+            </button>
+          </div>
         </div>
       )}
     </div>
