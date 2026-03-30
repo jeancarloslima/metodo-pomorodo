@@ -22,28 +22,52 @@ body {
 }
 
 #app {
-    width: 100dvw;
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5dvh;
-    padding: 10dvh 1.5rem 1.5rem 1.5rem;
+    padding: 10dvh 1.5rem 7dvh 1.5rem;
     background-color: var(--cor-fundo);
-}
-
-#titulo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
 }
 
 header,
 main {
     width: 100%;
+}
+
+button {
+    font-family: var(--fonte-primaria);
+}
+
+#header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+#titulo {
+    display: flex;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.btn-editar-tempos {
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+.btn-editar-tempos svg {
+    width: 24px;
+    height: 24px;
 }
 
 #main-container {
