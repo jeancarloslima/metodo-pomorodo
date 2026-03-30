@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { PreferenciasTemposContext } from "../../contexts/PreferenciasTempoContext";
+import { DadosTemposContext } from "../../contexts/DadosTempoContext";
 import "./editor-tempos.css";
 
 export default function EditorTempos() {
-  const { tempoFoco, tempoDescanso, setTempoFoco, setTempoDescanso } =
-    useContext(PreferenciasTemposContext);
+  const { tempoFoco, tempoDescanso, setTempoFoco, setTempoDescanso, setTempoAtualFoco, setTempoAtualDescanso } =
+    useContext(DadosTemposContext);
 
   return (
     <div className="editor-tempos-container">
@@ -16,6 +16,7 @@ export default function EditorTempos() {
             const novoTempo = tempoFoco - 1;
 
             setTempoFoco(novoTempo);
+            setTempoAtualFoco(novoTempo);
             localStorage.setItem("tempo-foco", novoTempo);
           }}
           className="btn-controle btn-foco"
@@ -30,6 +31,7 @@ export default function EditorTempos() {
             const novoTempo = tempoFoco + 1;
 
             setTempoFoco(novoTempo);
+            setTempoAtualFoco(novoTempo);
             localStorage.setItem("tempo-foco", novoTempo);
           }}
           className="btn-controle btn-foco"
@@ -46,6 +48,7 @@ export default function EditorTempos() {
             const novoTempo = tempoDescanso - 1;
 
             setTempoDescanso(novoTempo);
+            setTempoAtualDescanso(novoTempo);
             localStorage.setItem("tempo-descanso", novoTempo);
           }}
           className="btn-controle btn-descanso"
@@ -60,6 +63,7 @@ export default function EditorTempos() {
             const novoTempo = tempoDescanso + 1;
 
             setTempoDescanso(novoTempo);
+            setTempoAtualDescanso(novoTempo);
             localStorage.setItem("tempo-descanso", novoTempo);
           }}
           className="btn-controle btn-descanso"

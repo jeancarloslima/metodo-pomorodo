@@ -33,13 +33,22 @@
 .tempo {
     font-size: 5rem;
     font-weight: 600;
+    width: 100%;
+    text-align: center;
 }
 
 .btn-controle-tempo {
-    width: 150px;
+    width: 130px;
     height: 40px;
     border: 1px solid transparent;
     border-radius: 4px;
     font-family: var(--fonte-primaria);
     cursor: pointer;
+}
+
+.botoes-controle {
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    justify-content: space-between;
 }
