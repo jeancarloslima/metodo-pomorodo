@@ -9,6 +9,7 @@ export default function EditorTempos() {
   return (
     <div className="editor-tempos-container">
       <div className="container-foco">
+        <span className="titulo-tempo">Tempo Foco:</span>
         <button
           onClick={() => {
             if (tempoFoco === 1) return;
@@ -41,6 +42,7 @@ export default function EditorTempos() {
       </div>
 
       <div className="container-descanso">
+        <span className="titulo-tempo">Tempo Descanso:</span>
         <button
           onClick={() => {
             if (tempoDescanso === 1) return;

@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 1rem;
   position: absolute;
   width: 100%;
   max-width: 350px;
-  height: 150px;
+  height: 120px;
   padding: 1rem;
   background-color: var(--cor-texto);
   color: var(--cor-fundo);
@@ -30,8 +30,30 @@
 
 .container-foco,
 .container-descanso {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+.titulo-tempo {
+  width: 100px;
+}
+
+.tempo-foco,
+.tempo-descanso {
+  width: 30px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.btn-controle {
+  width: 80px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
 }
