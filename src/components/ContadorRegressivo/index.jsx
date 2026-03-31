@@ -39,6 +39,18 @@ export default function ContadorRegressivo() {
     };
   });
 
+  useEffect(() => {
+    if (rodando) {
+      if (modo === "Foco") {
+        document.title = `Foco: ${tempoAtualFoco}:${segundos >= 10 ? segundos : "0" + segundos}`;
+      } else {
+        document.title = `Descanso: ${tempoAtualDescanso}:${segundos >= 10 ? segundos : "0" + segundos}`;
+      }
+    } else {
+      document.title = "Desafio-006-pomodoro";
+    }
+  }, [segundos, rodando, modo, tempoAtualDescanso, tempoAtualFoco]);
+
   return (
     <div className="contador-container">
       <div className="modos-container">
