@@ -79,9 +79,9 @@ export default function ContadorRegressivo() {
       </div>
       <h2 className="tempo">
         {modo === "Foco" &&
-          `${tempoAtualFoco}:${segundos >= 10 ? segundos : "0" + segundos}`}
+          `${tempoAtualFoco >= 10 ? tempoAtualFoco : "0" + tempoAtualFoco}:${segundos >= 10 ? segundos : "0" + segundos}`}
         {modo === "Descanso" &&
-          `${tempoAtualDescanso}:${segundos >= 10 ? segundos : "0" + segundos}`}
+          `${tempoAtualDescanso  >= 10 ? tempoAtualDescanso : "0" + tempoAtualDescanso}:${segundos >= 10 ? segundos : "0" + segundos}`}
       </h2>
       {!rodando && (
         <button
