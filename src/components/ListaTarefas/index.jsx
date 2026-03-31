@@ -49,6 +49,7 @@ export default function ListaTarefas() {
           </li>
         ))}
       </ul>
+      
       {!criandoTarefa && (
         <button
           onClick={() => setCriandoTarefa(true)}
@@ -57,6 +58,7 @@ export default function ListaTarefas() {
           + Adicionar Tarefa
         </button>
       )}
+
       {criandoTarefa && (
         <div className="cria-tarefa-container">
           <input

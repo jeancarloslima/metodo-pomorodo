@@ -21,6 +21,11 @@ export default function ContadorRegressivo() {
 
     if (rodando) {
       intervalo = setInterval(() => {
+        if (segundos === 0 && (tempoAtualDescanso === 0 || tempoAtualFoco === 0)) {
+          document.title = "Fim do período!";
+          return;
+        }
+
         if (segundos > 0) {
           setSegundos((segundosAtuais) => segundosAtuais - 1);
         } else {
