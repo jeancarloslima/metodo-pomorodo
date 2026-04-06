@@ -4,21 +4,21 @@ import { FaTrash } from "react-icons/fa";
 
 export default function ListaTarefas() {
   const [criandoTarefa, setCriandoTarefa] = useState(false);
-  const [listaTarefas, setListaTarefas] = useState(
-    JSON.parse(localStorage.getItem("lista-tarefas")) || [],
-  );
-  const [id, setId] = useState(listaTarefas.length);
+  
+  const [listaTarefas, setListaTarefas] = useState(() => {
+    const tarefasSalvas = localStorage.getItem("lista-tarefas");
+    return tarefasSalvas ? JSON.parse(tarefasSalvas) : [];
+  });
+  
   const inputRef = useRef(null);
 
   function handleCriaTarefa() {
     const valor = inputRef.current.value;
 
     if (valor.trim() !== "") {
-      const listaAtualizada = [...listaTarefas, { id: id, texto: valor }];
+      const listaAtualizada = [...listaTarefas, { id: Date.now(), texto: valor }];
 
       setListaTarefas(listaAtualizada);
-      setId((valorAtual) => valorAtual + 1);
-
       localStorage.setItem("lista-tarefas", JSON.stringify(listaAtualizada));
 
       inputRef.current.value = "";
@@ -26,12 +26,8 @@ export default function ListaTarefas() {
     }
   }
 
-  function handleDeletaTarefa(e) {
-    const noPai = e.target.parentElement;
-
-    const id = Number(noPai.id);
-    const listaAtualizada = listaTarefas.filter((item) => item.id !== id);
-
+  function handleDeletaTarefa(idParaDeletar) {
+    const listaAtualizada = listaTarefas.filter((item) => item.id !== idParaDeletar);
     setListaTarefas(listaAtualizada);
     localStorage.setItem("lista-tarefas", JSON.stringify(listaAtualizada));
   }
@@ -41,45 +37,34 @@ export default function ListaTarefas() {
       <h2 className="titulo-tarefas">Tarefas</h2>
       <ul className="lista-tarefas">
         {listaTarefas.map((item) => (
-          <li className="item-tarefa" key={item.id} id={item.id}>
+          <li className="item-tarefa" key={item.id}>
             <span className="texto-tarefa">{item.texto}</span>
-            <button onClick={handleDeletaTarefa} className="btn-excluir-tarefa">
+            <button onClick={() => handleDeletaTarefa(item.id)} className="btn-excluir-tarefa">
               <FaTrash />
             </button>
           </li>
         ))}
       </ul>
       
-      {!criandoTarefa && (
-        <button
-          onClick={() => setCriandoTarefa(true)}
-          className="btn-add-tarefa"
-        >
+      {!criandoTarefa ? (
+        <button onClick={() => setCriandoTarefa(true)} className="btn-add-tarefa">
           + Adicionar Tarefa
         </button>
-      )}
-
-      {criandoTarefa && (
+      ) : (
         <div className="cria-tarefa-container">
           <input
             ref={inputRef}
             type="text"
             name="tarefa"
-            id="tarefa"
+            id="tarefa" 
             maxLength={window.innerWidth < 550 ? "30" : "50"}
             autoFocus
           />
           <div className="botoes-criar-tarefa">
-            <button
-              onClick={() => setCriandoTarefa(false)}
-              className="btn-tarefa btn-cancela-tarefa"
-            >
+            <button onClick={() => setCriandoTarefa(false)} className="btn-tarefa btn-cancela-tarefa">
               Cancelar
             </button>
-            <button
-              onClick={handleCriaTarefa}
-              className="btn-tarefa btn-salva-tarefa"
-            >
+            <button onClick={handleCriaTarefa} className="btn-tarefa btn-salva-tarefa">
               Salvar
             </button>
           </div>

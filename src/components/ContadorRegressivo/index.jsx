@@ -1,122 +1,107 @@
 import "./contador-regressivo.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { DadosTemposContext } from "../../contexts/DadosTempoContext";
 
 export default function ContadorRegressivo() {
-  const [segundos, setSegundos] = useState(0);
+  const { modo, setModo, tempoFoco, tempoDescanso } = useContext(DadosTemposContext);
+  
   const [rodando, setRodando] = useState(false);
-  const {
-    modo,
-    tempoFoco,
-    tempoDescanso,
-    tempoAtualFoco,
-    tempoAtualDescanso,
-    setModo,
-    setTempoAtualFoco,
-    setTempoAtualDescanso,
-  } = useContext(DadosTemposContext);
+  const [tempoRestante, setTempoRestante] = useState(tempoFoco * 60);
+
+  const prevTemposRef = useRef({ foco: tempoFoco, descanso: tempoDescanso });
+
+  useEffect(() => {
+    const editouFoco = prevTemposRef.current.foco !== tempoFoco;
+    const editouDescanso = prevTemposRef.current.descanso !== tempoDescanso;
+
+    if (editouFoco || editouDescanso) {
+      if (!rodando) {
+        setTempoRestante((modo === "Foco" ? tempoFoco : tempoDescanso) * 60);
+      }
+      prevTemposRef.current = { foco: tempoFoco, descanso: tempoDescanso };
+    }
+  }, [tempoFoco, tempoDescanso, modo, rodando]);
 
   useEffect(() => {
     let intervalo;
 
     if (rodando) {
       intervalo = setInterval(() => {
-        if (segundos === 0 && (tempoAtualDescanso === 0 || tempoAtualFoco === 0)) {
-          document.title = "Fim do período!";
-          return;
-        }
-
-        if (segundos > 0) {
-          setSegundos((segundosAtuais) => segundosAtuais - 1);
-        } else {
-          if (modo === "Foco") {
-            setTempoAtualFoco((tempoAtual) => tempoAtual - 1);
-          } else {
-            setTempoAtualDescanso((tempoAtual) => tempoAtual - 1);
+        setTempoRestante((tempoAtual) => {
+          if (tempoAtual <= 1) {
+            clearInterval(intervalo);
+            setRodando(false);
+            return 0; 
           }
-          setSegundos(59);
-        }
+          return tempoAtual - 1;
+        });
       }, 1000);
     }
 
-    return () => {
-      clearInterval(intervalo);
-    };
-  });
+    return () => clearInterval(intervalo);
+  }, [rodando]);
 
   useEffect(() => {
+    const min = String(Math.floor(tempoRestante / 60)).padStart(2, "0");
+    const seg = String(tempoRestante % 60).padStart(2, "0");
+
     if (rodando) {
-      if (modo === "Foco") {
-        document.title = `Foco: ${tempoAtualFoco}:${segundos >= 10 ? segundos : "0" + segundos}`;
-      } else {
-        document.title = `Descanso: ${tempoAtualDescanso}:${segundos >= 10 ? segundos : "0" + segundos}`;
-      }
+      document.title = `${modo}: ${min}:${seg}`;
+    } else if (tempoRestante === 0) {
+      document.title = "Fim do período!";
     } else {
-      document.title = "Desafio-006-pomodoro";
+      document.title = "Pomodoro";
     }
-  }, [segundos, rodando, modo, tempoAtualDescanso, tempoAtualFoco]);
+  }, [tempoRestante, rodando, modo]);
+
+  const minutosExibicao = String(Math.floor(tempoRestante / 60)).padStart(2, "0");
+  const segundosExibicao = String(tempoRestante % 60).padStart(2, "0");
+
+  const trocarModo = (novoModo) => {
+    if (modo === novoModo) return;
+    
+    setModo(novoModo);
+    setRodando(false);
+    
+    setTempoRestante((novoModo === "Foco" ? tempoFoco : tempoDescanso) * 60);
+  };
 
   return (
     <div className="contador-container">
       <div className="modos-container">
         <button
-          onClick={() => {
-            setModo("Foco");
-            setTempoAtualFoco(tempoFoco);
-            setSegundos(0);
-            setRodando(false);
-          }}
+          onClick={() => trocarModo("Foco")}
           className={`btn-modo btn-foco ${modo === "Foco" ? "modo-ativo" : ""}`}
         >
           Foco
         </button>
         <button
-          onClick={() => {
-            setModo("Descanso");
-            setTempoAtualDescanso(tempoDescanso);
-            setSegundos(0);
-            setRodando(false);
-          }}
+          onClick={() => trocarModo("Descanso")}
           className={`btn-modo btn-descanso ${modo === "Descanso" ? "modo-ativo" : ""}`}
         >
           Descanso
         </button>
       </div>
+      
       <h2 className="tempo">
-        {modo === "Foco" &&
-          `${tempoAtualFoco >= 10 ? tempoAtualFoco : "0" + tempoAtualFoco}:${segundos >= 10 ? segundos : "0" + segundos}`}
-        {modo === "Descanso" &&
-          `${tempoAtualDescanso  >= 10 ? tempoAtualDescanso : "0" + tempoAtualDescanso}:${segundos >= 10 ? segundos : "0" + segundos}`}
+        {minutosExibicao}:{segundosExibicao}
       </h2>
-      {!rodando && (
-        <button
-          onClick={() => setRodando(true)}
-          className="btn-controle-tempo btn-comecar"
-        >
+
+      {!rodando && tempoRestante > 0 && (
+        <button onClick={() => setRodando(true)} className="btn-controle-tempo btn-comecar">
           COMEÇAR
         </button>
       )}
+
       {rodando && (
         <div className="botoes-controle">
-          <button
-            onClick={() => {
-              setRodando(false);
-            }}
-            className="btn-controle-tempo btn-pausar"
-          >
+          <button onClick={() => setRodando(false)} className="btn-controle-tempo btn-pausar">
             PAUSAR
           </button>
           <button
             onClick={() => {
               setRodando(false);
-
-              if (modo === "Foco") {
-                setTempoAtualFoco(tempoFoco);
-              } else {
-                setTempoAtualDescanso(tempoDescanso);
-              }
-
-              setSegundos(0);
+              setTempoRestante((modo === "Foco" ? tempoFoco : tempoDescanso) * 60);
             }}
             className="btn-controle-tempo btn-reiniciar"
           >

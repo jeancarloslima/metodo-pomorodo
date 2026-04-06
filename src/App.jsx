@@ -4,7 +4,6 @@ import EditorTempos from "./components/EditorTempos";
 import ListaTarefas from "./components/ListaTarefas";
 import { useState } from "react";
 import { GiTomato } from "react-icons/gi";
-import { FaPen } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { DadosTemposContext } from "./contexts/DadosTempoContext";
 
@@ -12,27 +11,21 @@ function App() {
   const [modo, setModo] = useState("Foco");
   const [editando, setEditando] = useState(false);
   const [tempoFoco, setTempoFoco] = useState(
-    Number(localStorage.getItem("tempo-foco")) || 25,
+    Number(localStorage.getItem("tempo-foco")) || 25
   );
   const [tempoDescanso, setTempoDescanso] = useState(
-    Number(localStorage.getItem("tempo-descanso")) || 5,
+    Number(localStorage.getItem("tempo-descanso")) || 5
   );
-  const [tempoAtualFoco, setTempoAtualFoco] = useState(tempoFoco);
-  const [tempoAtualDescanso, setTempoAtualDescanso] = useState(tempoDescanso);
 
   return (
     <DadosTemposContext.Provider
       value={{
         modo,
-        tempoFoco,
-        tempoDescanso,
-        tempoAtualFoco,
-        tempoAtualDescanso,
         setModo,
+        tempoFoco,
         setTempoFoco,
+        tempoDescanso,
         setTempoDescanso,
-        setTempoAtualFoco,
-        setTempoAtualDescanso,
       }}
     >
       <div id="app">
